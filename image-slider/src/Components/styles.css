@@ -43,6 +43,14 @@
   border-radius: 50%;
   border: none;
   outline: none;
-  margin: 0, 0.2rem;
+  margin: 0 0.2rem;
   cursor: pointer;
+}
+
+.hide-current-image {
+  display: none;
+}
+
+.inactive-indicator {
+  background-color: gray;
 }

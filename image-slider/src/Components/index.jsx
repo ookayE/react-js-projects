@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BsArrowRightCircleFill, bSarrowleftCircleFill } from "react-icons/bs";
+import { BsArrowRightCircleFill, BsArrowLeftCircleFill } from "react-icons/bs";
 import "./styles.css";
 
 export default function ImageSlider({ url, limit = 5, page = 1 }) {
@@ -25,6 +25,14 @@ export default function ImageSlider({ url, limit = 5, page = 1 }) {
     }
   }
 
+  function handlePrevious() {
+    setCurrentSlide(currentSlide === 0 ? images.length - 1 : currentSlide - 1);
+  }
+
+  function handleNext() {
+    setCurrentSlide(currentSlide === images.length - 1 ? 0 : currentSlide + 1);
+  }
+
   useEffect(() => {
     if (url !== "") fetchImages(url);
   }, [url]);
@@ -41,23 +49,41 @@ export default function ImageSlider({ url, limit = 5, page = 1 }) {
 
   return (
     <div className="container">
-      <bSarrowleftCircleFill className="arrow arrow-left" />
+      <BsArrowLeftCircleFill
+        onClick={handlePrevious}
+        className="arrow arrow-left"
+      />
       {images && ImageSlider.length
-        ? images.map((imageItem) => (
+        ? images.map((imageItem, index) => (
             <img
               key={imageItem.id}
               src={imageItem.download_url}
               alt={imageItem.download_url}
-              className="current-image"
+              className={
+                currentSlide === index
+                  ? "current-image"
+                  : "current-image hide-current-image"
+              }
             />
           ))
         : null}
 
-      <bSarrowrightCircleFill className="arrow arrow-right" />
-      <span className="circle-indicators">
+      <BsArrowRightCircleFill
+        onClick={handleNext}
+        className="arrow arrow-right"
+      />
+      <span className="circle-indicator">
         {images && images.length
           ? images.map((_, index) => (
-              <button key={index} className="current-indicator"></button>
+              <button
+                key={index}
+                className={
+                  currentSlide === index
+                    ? "current-indicator"
+                    : "current-indicator inactive-indicator"
+                }
+                onClick={() => setCurrentSlide(index)}
+              ></button>
             ))
           : null}
       </span>
