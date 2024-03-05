@@ -1,16 +1,27 @@
 import { useState } from "react";
+import Modal from "./modal";
+import "./modal.css";
 
 export default function ModalTest() {
-  const [showModalPopup, setShowModalPopup] = useState(false);
+  const [toggleModal, setToggleModal] = useState(false);
 
-  function handleToggleModalPopup() {
-    showModalPopup(!showModalPopup);
+  function handleToggle() {
+    setToggleModal(!toggleModal);
+  }
+
+  function onClose() {
+    setToggleModal(false);
   }
 
   return (
-    <div>
-      <button onClick={handleToggleModalPopup}>Open Modal Popup</button>
-      {showModalPopup && <Modal />}
+    <div className="container">
+      <button className="button" onClick={handleToggle}>
+        Toggle Popup
+      </button>
+
+      {toggleModal && (
+        <Modal onClose={onClose} body={<div>Customized Body</div>} />
+      )}
     </div>
   );
 }
