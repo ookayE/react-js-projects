@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
+import User from "./user";
+import "./styles.css";
 
 export default function GithubProfileFinder() {
   const [username, setUsername] = useState("ookayE");
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit() {}
+  function handleSubmit() {
+    fetchGithubUserData();
+  }
 
   async function fetchGithubUserData() {
     setLoading(true);
@@ -15,14 +19,18 @@ export default function GithubProfileFinder() {
     if (data) {
       setUserData(data);
       setLoading(false);
+      setUsername("");
     }
-
     console.log(data);
   }
 
   useEffect(() => {
     fetchGithubUserData();
   }, []);
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div className="github-profile-container">
@@ -35,8 +43,12 @@ export default function GithubProfileFinder() {
           onChange={(event) => setUsername(event.target.value)}
         />
 
-        <button onClick={handleSubmit}>Search</button>
+        <button onClick={handleSubmit} type="submit">
+          Search
+        </button>
       </div>
+
+      {userData !== null ? <User user={userData} /> : null}
     </div>
   );
 }
