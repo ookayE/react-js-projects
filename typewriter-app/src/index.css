@@ -15,3 +15,71 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-JMH-Typewriter {
+  font-family: "JMH Typewriter", sans-serif;
+}
+.font-JMH-Typewriter-Thin {
+  font-family: "JMH Typewriter Thin", sans-serif;
+}
+.font-JMH-Typewriter {
+  font-family: "JMH Typewriter", sans-serif;
+}
+.font-JMH-Typewriter {
+  font-family: "JMH Typewriter", sans-serif;
+}
+
+@font-face {
+  font-family: "Courier Prime";
+  src: url("../src/fonts/Courier\ Prime.ttf");
+}
+@font-face {
+  font-family: "Courier Prime Bold";
+  src: url("../src/fonts/Courier\ Prime\ Bold.ttf");
+}
+@font-face {
+  font-family: "Courier Prime Bold Italic ";
+  src: url("../src/fonts/Courier\ Prime\ Bold\ Italic.ttf");
+}
+@font-face {
+  font-family: "Courier Prime Italic";
+  src: url("../src/fonts/Courier\ Prime\ Italic.ttf");
+}
+
+@font-face {
+  font-family: "JMH Typewriter";
+  src: url("../src/fonts/JMH\ Typewriter.ttf");
+}
+@font-face {
+  font-family: "JMH Typewriter Thin";
+  src: url("../src/fonts/JMH\ Typewriter-Thin.ttf");
+}
+@font-face {
+  font-family: "JMH Typewriter Bold";
+  src: url("../src/fonts/JMH\ Typewriter-Bold.ttf");
+}
+@font-face {
+  font-family: "JMH Typewriter Black";
+  src: url("../src/fonts/JMH\ Typewriter-Black.ttf");
+}
+
+.paper {
+  width: 1500px;
+  margin: 20px auto;
+  background-color: #fff;
+  border: 1px solid #ffffff;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.paper-textarea {
+  font-family: "Courier Prime Italic";
+  width: 100%;
+  height: 100vh;
+  border: none;
+  font-size: 24px;
+  line-height: 1.2;
+  padding: 10px;
+  resize: none;
+  outline: none;
+}
