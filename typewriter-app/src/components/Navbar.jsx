@@ -1,30 +1,42 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBold,
+  faItalic,
+  faUnderline,
+  faMoon,
+  faSun,
+} from "@fortawesome/free-solid-svg-icons";
 
-export default function NavBar() {
-  const [bold, setBold] = useState(false);
-  const [italic, setItalic] = useState(false);
-  const [underline, setUnderline] = useState(false);
+export default function NavBar({ darkMode, setDarkMode }) {
+  function toggleDarkMode() {
+    setDarkMode(!darkMode);
 
-  function handleBold(e) {
-    setBold(!bold);
-  }
-  function handleItalic(e) {
-    setBold(!bold);
-  }
-  function handleUnderline(e) {
-    setBold(!bold);
+    {
+      darkMode ? console.log("Dark!") : console.log("Light!");
+    }
   }
 
   return (
-    <div>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-        Button
+    <div className="pt-4">
+      <button className="bg-blue-500 mx-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        <FontAwesomeIcon icon={faBold} />
       </button>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-        Button
+      <button className="bg-blue-500 mx-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        <FontAwesomeIcon icon={faItalic} />
       </button>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-        Button
+      <button className="bg-blue-500 mx-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        <FontAwesomeIcon icon={faUnderline} />
+      </button>
+      <button
+        className="bg-blue-500 mx-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        onClick={toggleDarkMode}
+      >
+        {darkMode ? (
+          <FontAwesomeIcon icon={faSun} />
+        ) : (
+          <FontAwesomeIcon icon={faMoon} />
+        )}
       </button>
     </div>
   );
