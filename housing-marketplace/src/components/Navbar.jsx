@@ -4,12 +4,76 @@ import { ReactComponent as ExploreIcon } from "../assets/svg/exploreIcon.svg";
 import { ReactComponent as PersonOutlineIcon } from "../assets/svg/personOutlineIcon.svg";
 
 function Navbar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  //function to check if current route is the same as the button's route
+  //changes color of icon if so (dark if true, light if false)
+  const pathMatchRoute = (route) => {
+    if (route === location.pathname) {
+      return true;
+    }
+  };
+
   return (
     <footer className="navbar">
       <nav className="navbarNav">
         <ul className="navbarListItems">
+          {/* Explore Button in navbar */}
           <li className="navbarListItem">
-            <ExploreIcon fill="#2c2c2c" />
+            <ExploreIcon
+              fill={pathMatchRoute("/") ? "#2c2c2c" : "#8f8f8f"}
+              width="36px"
+              height="36px"
+              onClick={() => navigate("/")}
+            />
+            <p
+              className={
+                pathMatchRoute("/")
+                  ? "navbarListItemNameActive"
+                  : "navbarListItemName"
+              }
+            >
+              Explore
+            </p>
+          </li>
+
+          {/* Offers button in navbar */}
+          <li className="navbarListItem">
+            <OfferIcon
+              fill={pathMatchRoute("/offers") ? "#2c2c2c" : "#8f8f8f"}
+              width="36px"
+              height="36px"
+              onClick={() => navigate("/offers")}
+            />
+            <p
+              className={
+                pathMatchRoute("/offers")
+                  ? "navbarListItemNameActive"
+                  : "navbarListItemName"
+              }
+            >
+              Offer
+            </p>
+          </li>
+
+          {/* Profile button in navbar */}
+          <li className="navbarListItem">
+            <PersonOutlineIcon
+              fill={pathMatchRoute("/profile") ? "#2c2c2c" : "#8f8f8f"}
+              width="36px"
+              height="36px"
+              onClick={() => navigate("/profile")}
+            />
+            <p
+              className={
+                pathMatchRoute("/profile")
+                  ? "navbarListItemNameActive"
+                  : "navbarListItemName"
+              }
+            >
+              Profile
+            </p>
           </li>
         </ul>
       </nav>
