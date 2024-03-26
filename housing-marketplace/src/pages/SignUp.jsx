@@ -11,6 +11,7 @@ import {
 import { db } from "../firebase.config";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase.config";
+import { toast } from "react-toastify";
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -64,7 +65,7 @@ function SignUp() {
 
       navigate("/"); // Redirect user to the homepage on successful sign up.
     } catch (error) {
-      console.log(error); // Log any errors to the console.
+      toast.error("Something went wrong with resistration");
     }
   };
 
