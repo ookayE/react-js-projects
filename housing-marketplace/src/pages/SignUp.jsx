@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import {
@@ -18,10 +19,13 @@ function SignUp() {
     email: "",
     password: "",
   });
+  // Destructuring formData to easily access each value.
   const { name, email, password } = formData;
 
+  // useNavigate hook for redirecting the user after successful sign up.
   const navigate = useNavigate();
 
+  // Function to update formData state based on form input changes.
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -29,27 +33,38 @@ function SignUp() {
     }));
   };
 
+  // Async function to handle form submission.
   const onSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior.
 
     try {
-      const auth = getAuth();
+      const auth = getAuth(); // Initialize Firebase authentication.
 
+      // Create a new user with email and password, await for promise to resolve.
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
 
-      const user = userCredential.user;
+      const user = userCredential.user; // Extract user detail from userCredential.
 
+      // Update user profile with the name provided in the form.
       updateProfile(auth.currentUser, {
         displayName: name,
       });
 
-      navigate("/");
+      // Make a copy of formData, remove password, and add a server-generated timestamp.
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password; // Remove password for security.
+      formDataCopy.timestamp = serverTimestamp(); // Add server-generated timestamp.
+
+      // Save the user data in Firestore under "users" collection with user UID as the document ID.
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+
+      navigate("/"); // Redirect user to the homepage on successful sign up.
     } catch (error) {
-      console.log(error);
+      console.log(error); // Log any errors to the console.
     }
   };
 
