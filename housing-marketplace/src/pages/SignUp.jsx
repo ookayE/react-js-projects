@@ -51,7 +51,7 @@ function SignUp() {
       const user = userCredential.user; // Extract user detail from userCredential.
 
       // Update user profile with the name provided in the form.
-      updateProfile(auth.currentUser, {
+      await updateProfile(auth.currentUser, {
         displayName: name,
       });
 
@@ -65,10 +65,14 @@ function SignUp() {
 
       navigate("/"); // Redirect user to the homepage on successful sign up.
     } catch (error) {
-      toast.error("Something went wrong with resistration");
+      // Differentiate between specific error types and handle them accordingly.
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("Email is already in use");
+      } else {
+        toast.error("Something went wrong with registration");
+      }
     }
   };
-
   return (
     <>
       <div className="pageContainer">
