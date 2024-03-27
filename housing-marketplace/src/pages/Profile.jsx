@@ -20,7 +20,9 @@ function Profile() {
   const navigate = useNavigate();
 
   const onLogout = () => {
+    console.log("object");
     auth.signOut();
+    navigate("/");
   };
 
   const onSubmit = async () => {
