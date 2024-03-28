@@ -12,12 +12,13 @@ import {
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
+import ListingItem from "../components/ListingItem";
 
 function Category() {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const params = useParams();
+  const params = useParams(); //useParams lets you access the dynamic pieces of the URL matched by the <Route> pattern. It's particularly useful in scenarios where your app's behavior depends on information in the URL path.
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -77,7 +78,11 @@ function Category() {
           <main>
             <ul className="categoryListings">
               {listings.map((listing) => (
-                <h3>{listing.data.name}</h3>
+                <ListingItem
+                  listing={listing.data}
+                  id={listing.id}
+                  key={listing.id}
+                />
               ))}
             </ul>
           </main>
