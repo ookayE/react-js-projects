@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 function CreateListing() {
   const [loading, setLoading] = useState(false);
@@ -22,6 +23,7 @@ function CreateListing() {
     longitude: 0,
   });
 
+  //destructuring formData object
   const {
     type,
     name,
@@ -63,8 +65,40 @@ function CreateListing() {
     return <Spinner />;
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    //see if discounted price is > or = regular price
+    if (discountedPrice >= regularPrice) {
+      setLoading(false);
+      toast.error("Discount price needs to be less than regular price");
+      return;
+    }
+
+    //limit number of uploaded images
+    if (images.length > 6) {
+      setLoading(false);
+      toast.error("Please don't upload more than 6 images");
+    }
+
+    //geocoding
+    let geolocation = {};
+    let location;
+
+    if (geolocationEnabled) {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyCLrWypFn0Mzq1FgX13W_OacmKk-Hnk1EU`
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+    } else {
+      geolocation.lat = latitude;
+      geolocation.lng = longitude;
+      location = address;
+    }
+    setLoading(false);
   };
 
   const onMutate = (e) => {
