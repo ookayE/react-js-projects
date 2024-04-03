@@ -1,8 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { db } from "../firebase.config";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 
 function CreateListing() {
   const [loading, setLoading] = useState(false);
@@ -71,14 +79,15 @@ function CreateListing() {
     //see if discounted price is > or = regular price
     if (discountedPrice >= regularPrice) {
       setLoading(false);
-      toast.error("Discount price needs to be less than regular price");
+      toast.error("Discounted price needs to be less than regular price");
       return;
     }
 
-    //limit number of uploaded images
+    //check limit number of uploaded images
     if (images.length > 6) {
       setLoading(false);
-      toast.error("Please don't upload more than 6 images");
+      toast.error("Please only upload up to 6 images");
+      return;
     }
 
     //geocoding
@@ -87,17 +96,78 @@ function CreateListing() {
 
     if (geolocationEnabled) {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyCLrWypFn0Mzq1FgX13W_OacmKk-Hnk1EU`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
       );
 
       const data = await response.json();
 
-      console.log(data);
+      geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
+      geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+
+      location =
+        data.status === "ZERO_RESULTS"
+          ? undefined
+          : data.results[0].formatted_address;
+
+      if (location === undefined || location.includes("undefined")) {
+        setLoading(false);
+        toast.error("Invalid Address");
+      }
     } else {
       geolocation.lat = latitude;
       geolocation.lng = longitude;
       location = address;
     }
+
+    // vvv THIS FUNCTION IS FROM THE FIREBASE STORAGE DOCUMENTATION  vvvv
+    //store images in Firebase
+    const storeImage = async (image) => {
+      return new Promise((resolve, reject) => {
+        const storage = getStorage;
+        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+
+        const storageRef = ref(storage, "images/" + fileName);
+
+        const uploadTask = uploadBytesResumable(storageRef, image);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {
+            reject(error);
+          },
+          () => {
+            // Handle successful uploads on complete
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    };
+
+    const imageUrls = await Promise.all(
+      [...images].map((image) => storeImage(image))
+    ).catch(() => {
+      setLoading(false);
+      toast.error("Images not uploaded");
+      return;
+    });
+
     setLoading(false);
   };
 
