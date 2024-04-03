@@ -10,3 +10,9 @@ useEffect itself does not support async functions directly -> you can define ≈
 REVISIT LISTINGITEM.JSX to make sure I know how to render these things using our data.
 
 using useMutate function to check whether event is a boolean, file, etc and handling accordingly.
+
+Using geolocation with google's location API
+
+Storing API key in a .env
+
+using firebase/storage to create reference to files
