@@ -1,11 +1,13 @@
-export default function TabButtons({ petData, setActiveTab }) {
+const TabButtons = ({ petData, setCurrentTab }) => {
   return (
-    <div>
-      <div>
-        {petData.map((petName, index) => (
-          <div onClick={() => setActiveTab(index)}>{petName.animal}</div>
-        ))}
-      </div>
-    </div>
+    <>
+      {petData.map((petItem, index) => (
+        <li key={petItem.animal} onClick={() => setCurrentTab(index)}>
+          {petItem.animal}
+        </li>
+      ))}
+    </>
   );
-}
+};
+
+export default TabButtons;
