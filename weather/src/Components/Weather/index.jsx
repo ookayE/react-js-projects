@@ -44,6 +44,13 @@ const Weather = () => {
       year: "numeric",
     });
   }
+
+  function kelvinToFahrenheit(kelvinTemp) {
+    const celsius = kelvinTemp - 273.15;
+    const fahrenheit = (celsius * 9) / 5 + 32;
+    return fahrenheit.toFixed(2);
+  }
+
   return (
     <div>
       <Search
@@ -63,7 +70,11 @@ const Weather = () => {
           <div className="date">
             <span>{getCurrentDate()}</span>
           </div>
-          <div className="temperature">{weatherData?.main?.temp}</div>
+          <div className="temperature">
+            <div className="temperature">
+              {kelvinToFahrenheit(weatherData?.main?.temp)}°F
+            </div>
+          </div>
           <p className="description">
             {weatherData && weatherData.weather && weatherData.weather[0]
               ? weatherData.weather[0]?.description
