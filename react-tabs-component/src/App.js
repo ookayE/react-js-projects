@@ -1,9 +1,9 @@
 import { useState } from "react";
-import TabButton from "./Components/TabButtons";
+import TabButtons from "./Components/TabButtons";
 import TabContent from "./Components/TabContent";
 
-function App() {
-  const [activeTab, setActiveTab] = useState(0);
+const App = () => {
+  const [currentTab, setCurrentTab] = useState(0);
 
   const petData = [
     {
@@ -27,14 +27,12 @@ function App() {
       fact: "Horses have excellent memory and are capable of recognizing human emotions.",
     },
   ];
-  //"animal" and "fact"
-
   return (
-    <div>
-      <TabButton petData={petData} setActiveTab={setActiveTab} />
-      <TabContent petData={petData} activeTab={activeTab} />
-    </div>
+    <>
+      <TabButtons petData={petData} setCurrentTab={setCurrentTab} />
+      <TabContent petData={petData} currentTab={currentTab} />
+    </>
   );
-}
+};
 
 export default App;
