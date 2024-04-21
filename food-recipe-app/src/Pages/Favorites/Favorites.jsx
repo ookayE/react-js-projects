@@ -7,6 +7,7 @@ const Favorites = () => {
 
   return (
     <div className="py-8 container mx-auto flex flex-wrap justify-center gap-10">
+      {/* Like with our home page, for every item in our favoriteslist, render a <RecipeItem/>, which receives the item as a prop */}
       {favoritesList && favoritesList.length > 0 ? (
         favoritesList.map((item) => <RecipeItem item={item} />)
       ) : (

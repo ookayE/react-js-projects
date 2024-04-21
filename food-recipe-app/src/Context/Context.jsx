@@ -10,8 +10,10 @@ export default function GlobalState({ children }) {
   const [recipeDetailsData, setRecipeDetailsData] = useState(null);
   const [favoritesList, setFravoritesList] = useState([]);
 
+  //useNavigate hook routes to different pages based on events
   const navigate = useNavigate();
 
+  //event handler for form submissions
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -33,19 +35,20 @@ export default function GlobalState({ children }) {
   }
 
   const handleAddToFavorite = (getCurrentItem) => {
-    let favoritesListCopy = [...favoritesList];
+    let favoritesListCopy = [...favoritesList]; //create copy of favorites list to push/remove new recipes to
 
+    //
     const index = favoritesListCopy.findIndex(
       (item) => item.id === getCurrentItem.id
     );
 
     if (index === -1) {
-      favoritesListCopy.push(getCurrentItem);
+      favoritesListCopy.push(getCurrentItem); //if the item is not already in the favorites list, add it
     } else {
-      favoritesListCopy.splice(getCurrentItem);
+      favoritesListCopy.splice(getCurrentItem); //if the item IS already in the list, remove it
     }
 
-    setFravoritesList(favoritesListCopy);
+    setFravoritesList(favoritesListCopy); //update state
   };
 
   console.log(favoritesList, "favorite");
