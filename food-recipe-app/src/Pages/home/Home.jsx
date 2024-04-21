@@ -9,6 +9,7 @@ export default function Home() {
 
   return (
     <div className="py-8 container mx-auto flex flex-wrap justify-center gap-10">
+      {/* For each item in our recipeList, render a <RecipeItem/>, which receives the item as a prop */}
       {recipeList && recipeList.length > 0 ? (
         recipeList.map((item) => <RecipeItem item={item} />)
       ) : (
