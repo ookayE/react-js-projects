@@ -6,13 +6,13 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  //fetch products from fake api store
   async function fetchListOfProducts() {
     try {
       setLoading(true);
       const response = await fetch(`http://fakestoreAPI.com/products`);
 
       const data = await response.json();
-      console.log(data);
 
       if (data) {
         setLoading(false);
@@ -23,6 +23,7 @@ export default function Home() {
     }
   }
 
+  //fetch products on page load
   useEffect(() => {
     fetchListOfProducts();
   }, []);
@@ -39,10 +40,11 @@ export default function Home() {
           />
         </div>
       ) : (
+        // wrangle data, display on page:
         <div className="min-h-[80vh] grid sm:grid-cols-2 md: grid-cols-3 lg:grid-cols-4 max-w-6xl mx-auto p-3">
           {products && products.length
             ? products.map((productItem) => (
-                <ProductTile product={productItem} />
+                <ProductTile product={productItem} /> //pass to our ProductTile component
               ))
             : null}
         </div>
