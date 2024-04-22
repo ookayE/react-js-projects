@@ -18,6 +18,7 @@ const cartSlice = createSlice({
   },
 });
 
+// exported to modify the cart state in other components
 export const { addToCart, removeFromCart } = cartSlice.actions;
 
 //create slice = > give it name, menion intial state, create actions

@@ -2,11 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../Store/Slices/cart-slice";
 
 export default function ProductTile({ product }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // so we can dispatch Redux actions
 
   //this might be causing "returned the root state warning in console:
-  const { cart } = useSelector((state) => state);
-
+  const cart = useSelector((state) => state.cart);
   function handleAddToCard() {
     dispatch(addToCart(product));
   }
