@@ -2,7 +2,11 @@ import { useContext } from "react";
 import { GlobalContext } from "../Context/Context";
 
 export default function MovieCard({ movieItem }) {
-  const { handleAddToFavorites } = useContext(GlobalContext);
+  const { handleAddToFavorite, handleAddToWatchlist, watchList, favoriteList } =
+    useContext(GlobalContext);
+
+  const isFavorite = favoriteList.some((item) => item.id === movieItem.id);
+  const isOnWatchlist = watchList.some((item) => item.id === movieItem.id);
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
@@ -20,13 +24,19 @@ export default function MovieCard({ movieItem }) {
           </h1>
           <p className="mt-2 text-gray-500">{movieItem.Year}</p>
           {/* Additional movie information */}
-          {/* You can add more details like plot, ratings, etc. */}
           <button
             type="submit"
-            onClick={() => handleAddToFavorites()}
+            onClick={() => handleAddToFavorite(movieItem)}
             className="rounded-md mt-5 bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Add to Favorites
+          </button>
+          <button
+            type="submit"
+            onClick={() => handleAddToWatchlist(movieItem)}
+            className="rounded-md mt-5 bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Add to Watchlist
           </button>
         </div>
       </div>

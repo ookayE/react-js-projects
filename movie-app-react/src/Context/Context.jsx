@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import WatchList from "../Pages/Watchlist";
 
 export const GlobalContext = createContext(null);
 
@@ -7,7 +8,7 @@ export default function GlobalState({ children }) {
   const [loading, setLoading] = useState(false);
   const [movieList, setMovieList] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
-  // const [watchList, setWatchList] = useState([])
+  const [watchList, setWatchList] = useState([]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -25,6 +26,7 @@ export default function GlobalState({ children }) {
       if (data.Response === "True") {
         setMovieList(data.Search);
         setLoading(false);
+        setSearchParam("");
       } else {
         setMovieList([]);
       }
@@ -34,6 +36,7 @@ export default function GlobalState({ children }) {
   };
 
   const handleAddToFavorite = (getCurrentItem) => {
+    console.log(getCurrentItem);
     let favoriteListCopy = [...favoriteList];
 
     const index = favoriteListCopy.findIndex(
@@ -43,10 +46,25 @@ export default function GlobalState({ children }) {
     if (index === -1) {
       favoriteListCopy.push(getCurrentItem);
     } else {
-      favoriteListCopy.splice(getCurrentItem);
+      favoriteListCopy.splice(index, 1);
     }
 
     setFavoriteList(favoriteListCopy);
+  };
+
+  const handleAddToWatchlist = (getCurrentItem) => {
+    let watchListCopy = [...watchList];
+
+    const index = watchListCopy.findIndex(
+      (item) => item.imdbID === getCurrentItem.imdbID
+    );
+
+    if (index === -1) {
+      watchListCopy.push(getCurrentItem);
+    } else {
+      watchListCopy.splice(index, 1);
+    }
+    setWatchList(watchListCopy);
   };
 
   return (
@@ -61,6 +79,9 @@ export default function GlobalState({ children }) {
         movieList,
         setMovieList,
         handleAddToFavorite,
+        handleAddToWatchlist,
+        watchList,
+        favoriteList,
       }}
     >
       {children}
