@@ -4,8 +4,21 @@ import { GlobalContext } from "../Context/Context";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-center h-20 bg-black w-full text-white items-center">
-      <h1>MOVIE APP</h1>
+    <nav className="bg-black text-white">
+      <ul className="flex justify-between h-20 text-xl font-bold">
+        <li></li>
+        <li>
+          <NavLink to={"/"}>MOVIE APP</NavLink>
+        </li>
+        <div>
+          <li>
+            <NavLink to={"/watchlist"}>Watchlist</NavLink>
+          </li>
+          <li>
+            <NavLink to={"/favorites"}>Favorites</NavLink>
+          </li>
+        </div>
+      </ul>
     </nav>
   );
 };
