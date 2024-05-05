@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import { register } from "swiper/element/bundle";
 import { getDoc, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../firebase.config";
@@ -41,7 +48,14 @@ function Listing() {
 
   return (
     <main>
-      {/* image slider */}
+      {/* COME BACK TO THIS. 16:5: ~3:00 */}
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={3}
+        onSlideChange={() => console.log("slide change")}
+        onSwiper={(swiper) => console.log(swiper)}
+      ></Swiper>
+
       <div
         className="shareIconDiv"
         onClick={() => {

@@ -21,3 +21,5 @@ Storing API key in a .env
 using firebase/storage to create reference to files
 
 Dynamically constructing an email link using template literals like "mailto", "subject".
+
+Using leaflet for implementing interactive maps
