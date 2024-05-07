@@ -17,6 +17,7 @@ import ListingItem from "../components/ListingItem";
 function Category() {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
   const params = useParams(); //useParams lets you access the dynamic pieces of the URL matched by the <Route> pattern. It's particularly useful in scenarios where your app's behavior depends on information in the URL path.
 
@@ -39,6 +40,8 @@ function Category() {
 
         //querySnapshot acts as a bridge between your Firestore database and your React application, allowing you to retrieve, iterate over, and manipulate data from Firestore in a way that can be efficiently integrated into your application's UI.
         const querySnapshot = await getDocs(q); //contains the results of the query at the moment it was executed. Also includes metadata about the snapshot, such as the size and whether there are any documents in the snapshot at all. Also provides methods for us to iterate over results (forEach).Each document snapshot provides methods to access the document's data (doc.data()) and metadata, such as the document's ID (doc.id).
+        const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+        setLastFetchedListing(lastVisible);
 
         //loop through snapshot
         const listings = []; //init empty array to push
@@ -60,6 +63,37 @@ function Category() {
 
     fetchListings();
   }, [params.categoryName]);
+
+  //Load more
+  const onFetchMoreListings = async () => {
+    try {
+      const listingsRef = collection(db, "listings");
+      const q = query(
+        listingsRef,
+        where("type", "==", params.categoryName),
+        orderBy("timestamp", "desc"),
+        startAfter(lastFetchedListing),
+        limit(10)
+      );
+      const querySnapshot = await getDocs(q);
+      const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+      setLastFetchedListing(lastVisible);
+
+      const listings = [];
+
+      querySnapshot.forEach((doc) => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+
+      setListings((prevState) => [...prevState, ...listings]);
+      setLoading(false);
+    } catch (error) {
+      toast.error("Error fetching listings");
+    }
+  };
 
   return (
     <div className="category">
@@ -86,6 +120,15 @@ function Category() {
               ))}
             </ul>
           </main>
+
+          <br />
+          <br />
+
+          {lastFetchedListing && (
+            <p className="loadMore" onClick={onFetchMoreListings}>
+              Load More
+            </p>
+          )}
         </>
       ) : (
         <p>No Listings for {params.categoryName}</p>
