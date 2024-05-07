@@ -55,14 +55,18 @@ function Slider() {
     return <Spinner />;
   }
 
+  if (listings.length === 0) {
+    return <></>;
+  }
+
   return (
     listings && (
       <>
         <p className="exploreHeading">Recommended</p>
         <Swiper
-          spaceBetween={50}
-          onSlideChange={() => console.log("slide change")}
-          onSwiper={(swiper) => console.log(swiper)}
+          slidesPerGroup={1}
+          spaceBetween={25}
+          pagination={{ clickable: true }}
         >
           {listings.map(({ data, id }) => {
             console.log(data);
