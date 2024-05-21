@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Space+Grotesk&display=swap");
+
+@layer utilities {
+  .bg-natural-950 {
+    background-color: #1c1c1e; /* replace with the color you want */
+  }
+  .font-poppins {
+    font-family: "Poppins", sans-serif;
+  }
+}
+
+body {
+  @apply bg-natural-950 font-poppins;
+}
