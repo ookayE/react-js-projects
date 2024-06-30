@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #121212; /* Dark background color */
+  color: #e0e0e0; /* Light text color */
+}
+
+.App .todo-container {
+  background: #1e1e1e; /* Darker container background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Darker shadow */
+  width: 300px;
+}
+
+.App .todo-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #ffffff; /* White title color */
+}
