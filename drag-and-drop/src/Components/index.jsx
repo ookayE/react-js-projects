@@ -35,7 +35,12 @@ function DragAndDropFeature() {
     todos.forEach((todoItem) => {
       if (todoItem.status === "work in progress") {
         todoListToRender.workInProgressTodos.push(
-          <div key={todoItem.id} className="todo-card">
+          <div
+            onDragStart={(e) => onDragStart(e, todoItem.id)}
+            draggable
+            key={todoItem.id}
+            className="todo-card"
+          >
             {todoItem.todo}
           </div>
         );
@@ -58,11 +63,11 @@ function DragAndDropFeature() {
       <div className="drag-and-drop-board">
         <div className="work-in-progress">
           <h3>In Progress</h3>
-          {todoLists.workInProgressTodos}
+          {renderTodos().workInProgressTodos}
         </div>
         <div className="completed-todos">
           <h3>Completed</h3>
-          {todoLists.completedTodos}
+          {renderTodos().completedTodos}
         </div>
       </div>
     </div>
