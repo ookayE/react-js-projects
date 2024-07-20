@@ -66,6 +66,44 @@ const Quiz = () => {
   );
   const [showResult, setShowResult] = useState(false);
 
+  //moves question backwards one index if there is room to do so
+  const handlePreviousQuestion = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+    }
+  };
+
+  //fills null array with selected answers based on received optionItem, receiving index from the current question
+  const handleSelectedOption = (optionItem) => {
+    const updatedSelectedOptions = [...selectedOptions];
+    updatedSelectedOptions[currentQuestion] = optionItem;
+    setSelectedOptions(updatedSelectedOptions);
+  };
+
+  console.log(selectedOptions);
+
+  //move question forward one index
+  const handleNextQuestion = () => {
+    if (currentQuestion < quizQuestions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      if (
+        selectedOptions[currentQuestion] ===
+        quizQuestions[currentQuestion].correctAnswer
+      ) {
+        setScore(score + 1);
+      }
+      setShowResult(true);
+    }
+  };
+
+  const handleRestartQuiz = () => {
+    setCurrentQuestion(0);
+    setScore(0);
+    setSelectedOptions(new Array(quizQuestions.length).fill(null));
+    setShowResult(false);
+  };
+
   return (
     <div className="quiz">
       <h1>Quiz App</h1>
@@ -77,6 +115,7 @@ const Quiz = () => {
             {quizQuestions[currentQuestion].options.map((optionItem) => (
               <button
                 key={optionItem}
+                onClick={() => handleSelectedOption(optionItem)}
                 className={`option ${
                   selectedOptions[currentQuestion] === optionItem
                     ? "selected"
@@ -91,10 +130,11 @@ const Quiz = () => {
             <button
               disabled={currentQuestion === 0}
               className="previous-button"
+              onClick={handlePreviousQuestion}
             >
               Previous
             </button>
-            <button className="next-button">
+            <button onClick={handleNextQuestion} className="next-button">
               {currentQuestion < quizQuestions.length - 1 ? "Next" : "Finish"}
             </button>
           </div>
@@ -103,7 +143,9 @@ const Quiz = () => {
         <div>
           <h3>Quiz Completed</h3>
           <p>Your Score: {score}</p>
-          <button className="restart-button">Restart Quiz</button>
+          <button onClick={handleRestartQuiz} className="restart-button">
+            Restart Quiz
+          </button>
         </div>
       )}
     </div>
