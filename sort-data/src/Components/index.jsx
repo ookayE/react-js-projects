@@ -27,8 +27,6 @@ function SortData() {
     fetchListOfUsers();
   }, []);
 
-  //handleSort function to handle selection on refresh
-
   useEffect(() => {
     let copyUsers = [...users];
     if (sort === "ascending") {
@@ -57,7 +55,6 @@ function SortData() {
           value={sort}
           onChange={(e) => setSort(e.target.value)}
           name="sort"
-          id=""
         >
           <option value="" id="">
             Please Select Option
@@ -73,8 +70,8 @@ function SortData() {
       <ul>
         {users && users.length > 0
           ? users.map((userItem) => (
-              <li>
-                <p key={userItem.id}>{userItem.firstName}</p>
+              <li key={userItem.id}>
+                <p>{userItem.firstName}</p>
               </li>
             ))
           : null}
@@ -82,4 +79,5 @@ function SortData() {
     </div>
   );
 }
+
 export default SortData;
