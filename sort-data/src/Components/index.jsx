@@ -5,6 +5,7 @@ function SortData() {
   const [users, setUsers] = useState([]);
   const [sort, setSort] = useState("");
 
+  // Fetch list of users. Add to useEffect
   async function fetchListOfUsers() {
     try {
       setLoading(true);
@@ -37,7 +38,9 @@ function SortData() {
       setUsers(copyUsers);
     } else if (sort === "descending") {
       copyUsers = copyUsers.sort((firstUser, secondUser) =>
-        firstUser.firstName > secondUser.firstName ? -1 : 1
+        firstUser.firstName.toLowerCase() > secondUser.firstName.toLowerCase()
+          ? -1
+          : 1
       );
       setUsers(copyUsers);
     }
@@ -56,9 +59,7 @@ function SortData() {
           onChange={(e) => setSort(e.target.value)}
           name="sort"
         >
-          <option value="" id="">
-            Please Select Option
-          </option>
+          <option>Please Select Option</option>
           <option value="ascending" id="ascending">
             Sort A-Z
           </option>
