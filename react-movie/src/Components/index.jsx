@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { MovieContext } from "../Context/GlobalState";
+import MovieCard from "./movie-card";
 
 export default function MovieApp() {
-  const { searchMovieParam, setSearchMovieParam } = useContext(MovieContext);
+  const { searchMovieParam, setSearchMovieParam, loading, movieSearchResults } =
+    useContext(MovieContext);
 
   return (
     <div className="movie-app">
@@ -15,6 +17,14 @@ export default function MovieApp() {
           onChange={(e) => setSearchMovieParam(e.target.value)}
           placeholder="Search for a movie..."
         />
+      </div>
+
+      <div className="movie-search-results-container">
+        {movieSearchResults && movieSearchResults.length > 0
+          ? movieSearchResults.map((movieItem) => (
+              <MovieCard movieItem={movieItem} />
+            ))
+          : null}
       </div>
     </div>
   );
