@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import { MovieContext } from "../Context/GlobalState";
 import MovieCard from "./movie-card";
+import "../movie.css";
+import MovieWatchList from "./watchlist";
+import WatchedMovies from "./watched";
 
 export default function MovieApp() {
   const { searchMovieParam, setSearchMovieParam, loading, movieSearchResults } =
@@ -9,6 +12,11 @@ export default function MovieApp() {
   return (
     <div className="movie-app">
       <h1>Movie App</h1>
+
+      <div className="movie-lists-container">
+        <MovieWatchList />
+        <WatchedMovies />
+      </div>
       <div className="search-container">
         <input
           type="text"
@@ -19,8 +27,10 @@ export default function MovieApp() {
         />
       </div>
 
+      {loading ? <h1>Fetching Movies..</h1> : null}
+
       <div className="movie-search-results-container">
-        {movieSearchResults && movieSearchResults.length > 0
+        {movieSearchResults && movieSearchResults.length > 0 && !loading
           ? movieSearchResults.map((movieItem) => (
               <MovieCard movieItem={movieItem} />
             ))
