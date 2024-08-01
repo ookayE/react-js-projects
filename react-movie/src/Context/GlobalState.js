@@ -1,11 +1,29 @@
-import { createContext, useState, useDebounce, useEffect } from "react";
+import {
+  createContext,
+  useState,
+  useDebounce,
+  useEffect,
+  useReducer,
+} from "react";
+import { Reducer } from "./Reducer.js";
 
 export const MovieContext = createContext(null);
+
+const initialState = {
+  watchList: localStorage.getItem("watchList")
+    ? JSON.parse(localStorage.getItem("watchList"))
+    : [],
+  watched: localStorage.getItem("watched")
+    ? JSON.parse(localStorage.getItem("watched"))
+    : [],
+};
 
 function GlobalState({ children }) {
   const [searchMovieParam, setSearchMovieParam] = useState("");
   const [loading, setLoading] = useState(false);
   const [movieSearchResults, setMovieSearchResults] = useState([]);
+
+  const [state, dispatch] = useReducer(Reducer, initialState);
 
   async function fetchListOfMovies(query) {
     try {
