@@ -6,6 +6,11 @@ import {
   useReducer,
 } from "react";
 import { Reducer } from "./Reducer.js";
+import {
+  ADD_MOVIE_TO_WATCHED,
+  ADD_MOVIE_TO_WATCHLIST,
+} from "../Components/types.js";
+import { type } from "@testing-library/user-event/dist/type/index.js";
 
 export const MovieContext = createContext(null);
 
@@ -53,6 +58,22 @@ function GlobalState({ children }) {
     }
   }, [searchMovieParam]);
 
+  function handleAddToWatchlist(movie) {
+    dispatch({
+      type: ADD_MOVIE_TO_WATCHLIST,
+      payload: movie,
+    });
+  }
+
+  function handleAddToWatched(movie) {
+    dispatch({
+      type: ADD_MOVIE_TO_WATCHED,
+      payload: movie,
+    });
+  }
+
+  console.log(state);
+
   return (
     <MovieContext.Provider
       value={{
@@ -60,6 +81,9 @@ function GlobalState({ children }) {
         setSearchMovieParam,
         loading,
         movieSearchResults,
+        handleAddToWatched,
+        handleAddToWatchlist,
+        state,
       }}
     >
       {children}
