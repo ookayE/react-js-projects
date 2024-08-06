@@ -30,11 +30,13 @@ export default function MovieApp() {
       {loading ? <h1>Fetching Movies..</h1> : null}
 
       <div className="movie-search-results-container">
-        {movieSearchResults && movieSearchResults.length > 0 && !loading
-          ? movieSearchResults.map((movieItem) => (
-              <MovieCard movieItem={movieItem} />
-            ))
-          : null}
+        {movieSearchResults && movieSearchResults.length > 0 && !loading ? (
+          movieSearchResults.map((movieItem) => (
+            <MovieCard movieItem={movieItem} />
+          ))
+        ) : (
+          <h1>No Movie Result Found.</h1>
+        )}
       </div>
     </div>
   );
