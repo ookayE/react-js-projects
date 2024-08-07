@@ -9,8 +9,10 @@ import { Reducer } from "./Reducer.js";
 import {
   ADD_MOVIE_TO_WATCHED,
   ADD_MOVIE_TO_WATCHLIST,
+  REMOVE_MOVIE_FROM_WATCHLIST,
+  REMOVE_MOVIE_FROM_WATCHED,
+  MOVE_MOVIE_TO_WATCHED,
 } from "../Components/types.js";
-import { type } from "@testing-library/user-event/dist/type/index.js";
 
 export const MovieContext = createContext(null);
 
@@ -58,6 +60,12 @@ function GlobalState({ children }) {
     }
   }, [searchMovieParam]);
 
+  //set watchlist and watched to local storage
+  useEffect(() => {
+    localStorage.setItem("watchList", JSON.stringify(state.watchList));
+    localStorage.setItem("watched", JSON.stringify(state.watched));
+  }, [state]);
+
   function handleAddToWatchlist(movie) {
     dispatch({
       type: ADD_MOVIE_TO_WATCHLIST,
@@ -68,6 +76,27 @@ function GlobalState({ children }) {
   function handleAddToWatched(movie) {
     dispatch({
       type: ADD_MOVIE_TO_WATCHED,
+      payload: movie,
+    });
+  }
+
+  function handleRemoveFromWatchList(id) {
+    dispatch({
+      type: REMOVE_MOVIE_FROM_WATCHLIST,
+      payload: id,
+    });
+  }
+
+  function handleRemoveFromWatched(id) {
+    dispatch({
+      type: REMOVE_MOVIE_FROM_WATCHED,
+      payload: id,
+    });
+  }
+
+  function handleMoveMovieToWatched(movie) {
+    dispatch({
+      type: MOVE_MOVIE_TO_WATCHED,
       payload: movie,
     });
   }
@@ -84,6 +113,9 @@ function GlobalState({ children }) {
         handleAddToWatched,
         handleAddToWatchlist,
         state,
+        handleRemoveFromWatchList,
+        handleRemoveFromWatched,
+        handleMoveMovieToWatched,
       }}
     >
       {children}
