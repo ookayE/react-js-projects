@@ -1,45 +1,119 @@
+/* Global styles for the Movie App */
 .movie-app {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+/* Styles for the movie lists container */
+.movie-lists-container {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 20px;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.movie-app h1 {
-  margin-top: 30px;
-  margin: 30px;
+/* Styles for the search container */
+.search-container {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.movie-app .search-container {
+.search-container input {
+  width: 80%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Styles for the movie search results container */
+.movie-search-results-container {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
-.movie-app .movie-search-results-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+.movie-search-results-container h1 {
+  text-align: center;
+  width: 100%;
 }
 
-.movie-app .movie-search-results-container .movie-card .fill-image {
-  width: 200px;
-  height: 300px;
-  background-color: black;
-  color: white;
+/* Styles for the watchlist and watched movies */
+.movie-watchlist,
+.watched-movies {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.movie-watchlist h1,
+.watched-movies h1 {
+  text-align: center;
+  color: #555;
+}
+
+.watch-list-wrapper,
+.watched-wrapper {
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* Styles for individual movie items */
+.movie-info {
+  margin-bottom: 10px;
+}
+
+.movie-info h3 {
+  margin: 0;
   font-size: 18px;
-  font-weight: bolder;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: #333;
 }
 
-.movie-app .movie-lists-container {
+.movie-info h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #777;
+}
+
+/* Styles for buttons */
+.buttons-wrapper {
   display: flex;
   justify-content: space-between;
 }
 
-.movie-app .watch-list-wrapper {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+.buttons-wrapper button {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttons-wrapper button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .movie-lists-container {
+    flex-direction: column;
+  }
+
+  .movie-watchlist,
+  .watched-movies {
+    margin-bottom: 20px;
+  }
+
+  .search-container input {
+    width: 100%;
+  }
 }
