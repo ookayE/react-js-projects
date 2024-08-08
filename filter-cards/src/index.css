@@ -1,0 +1,15 @@
+.filter-products-container {
+  margin-top: 30px;
+}
+
+.list-of-products {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  justify-content: center;
+  list-style-type: none;
+}
+
+.list-of-products li {
+  width: 30%;
+}
