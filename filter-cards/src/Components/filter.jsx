@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 function FilterCategory() {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
-  const [currentSelectedCategory, setCurrenltSelectedCategory] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
 
   async function fetchProducts() {
@@ -18,6 +18,7 @@ function FilterCategory() {
       if (result && result.products.length > 0) {
         setLoading(false);
         setProducts(result.products);
+        setFilteredItems(result.products);
       }
     } catch (error) {
       console.log(error);
@@ -31,7 +32,23 @@ function FilterCategory() {
 
   useEffect(() => {
     const copyProducts = [...products];
-  }, [currentSelectedCategory]);
+    setFilteredItems(
+      selectedCategories.length > 0
+        ? copyProducts.filter((productItem) =>
+            selectedCategories.includes(productItem.category.toLowerCase())
+          )
+        : copyProducts
+    );
+  }, [products, selectedCategories]);
+
+  const toggleCategory = (category) => {
+    const lowerCaseCategory = category.toLowerCase();
+    setSelectedCategories((prevSelectedCategories) =>
+      prevSelectedCategories.includes(lowerCaseCategory)
+        ? prevSelectedCategories.filter((cat) => cat !== lowerCaseCategory)
+        : [...prevSelectedCategories, lowerCaseCategory]
+    );
+  };
 
   if (loading) {
     return <h3>Fetching. Please wait...</h3>;
@@ -42,7 +59,7 @@ function FilterCategory() {
       ? [...new Set(products.map((productItem) => productItem.category))]
       : [];
 
-  console.log(uniqueCategories, "uniqueCagories");
+  console.log(uniqueCategories, "uniqueCategories");
 
   return (
     <div className="filter-products-container">
@@ -50,15 +67,23 @@ function FilterCategory() {
       <div className="filter-categories-container">
         {uniqueCategories.map((uniqueCategoryItem) => (
           <button
-            onClick={() => setCurrenltSelectedCategory(uniqueCategoryItem)}
+            key={uniqueCategoryItem}
+            onClick={() => toggleCategory(uniqueCategoryItem)}
+            style={{
+              backgroundColor: selectedCategories.includes(
+                uniqueCategoryItem.toLowerCase()
+              )
+                ? "lightblue"
+                : "white",
+            }}
           >
             {uniqueCategoryItem}
           </button>
         ))}
       </div>
       <ul className="list-of-products">
-        {products && products.length > 0
-          ? products.map((productItem) => (
+        {filteredItems && filteredItems.length > 0
+          ? filteredItems.map((productItem) => (
               <li key={productItem.id}>
                 <p>{productItem.title}</p>
                 <button>{productItem.category}</button>
