@@ -1,9 +1,9 @@
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 
 export default function Accounts() {
-  const userProfileInfo = null;
+  const userProfileinfo = null;
 
-  if (userProfileInfo === null) redirect;
+  if (userProfileinfo === null) redirect("products?search=product1");
 
   return <h1>Accounts Page</h1>;
 }
