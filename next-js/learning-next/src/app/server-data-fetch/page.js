@@ -1,16 +1,5 @@
 import Link from "next/link";
-
-async function fetchListOfUsers() {
-  try {
-    const response = await fetch("https://dummyjson.com/users");
-
-    const data = await response.json();
-
-    return data.users;
-  } catch (error) {
-    throw new Error(error);
-  }
-}
+import { fetchListOfUsers } from "@/utilities/fetchUserData";
 
 export default async function ServerSideDataFetching() {
   const listOfUsers = await fetchListOfUsers();
