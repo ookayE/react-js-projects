@@ -8,7 +8,7 @@ export default function ClientSideDataFetching() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetchListOfUsersClient();
+    fetchListOfUsersClient(setLoading, setUsers);
   }, []);
 
   if (loading)
@@ -25,7 +25,9 @@ export default function ClientSideDataFetching() {
       <ul className="pt-4">
         {users && users.length > 0
           ? users.map((userItem) => (
-              <li className="text-cyan-400 pt-2 px-6">{userItem.firstName}</li>
+              <li key={userItem.id} className="text-cyan-400 pt-2 px-6">
+                {userItem.firstName}
+              </li>
             ))
           : null}
       </ul>
