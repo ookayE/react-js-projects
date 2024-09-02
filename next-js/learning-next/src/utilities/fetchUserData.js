@@ -8,20 +8,20 @@ export async function fetchListOfUsers() {
   }
 }
 
-async function fetchListOfUsersClient() {
+export async function fetchListOfUsersClient(setLoading, setUsers) {
   try {
     setLoading(true);
-    const response = await fetch(`https://dummyjson.com/users`);
+    const response = await fetch("https://dummyjson.com/users");
     const data = await response.json();
 
     if (data?.users) {
-      setLoading(false);
       setUsers(data.users);
     }
   } catch (error) {
     console.log(error);
-    setLoading(false);
     setUsers([]);
+  } finally {
+    setLoading(false);
   }
 }
 
