@@ -12,6 +12,7 @@ export default async function userDetails({ params }) {
     }
   }
 
+
   console.log(params);
 
   const userDetails = await fetchUserDetails(params.details);
