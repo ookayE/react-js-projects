@@ -1,3 +1,5 @@
+import { fetchUserDetails } from "@/utilities/fetchUserData";
+
 export default async function userDetails({ params }) {
   async function fetchUserDetails(currentUserId) {
     try {
@@ -11,7 +13,6 @@ export default async function userDetails({ params }) {
       throw new Error(error);
     }
   }
-
 
   console.log(params);
 
