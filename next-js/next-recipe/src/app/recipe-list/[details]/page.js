@@ -1,3 +1,5 @@
+import RecipeDetailsItem from "@/components/recipe-details";
+
 async function fetchRecipeDetails(currentRecipeId) {
   try {
     const response = await fetch(
@@ -15,5 +17,5 @@ async function fetchRecipeDetails(currentRecipeId) {
 export default async function RecipeDetails({ params }) {
   const getRecipeDetails = await fetchRecipeDetails(params?.details);
 
-  return <RecipeDetails getRecipeDetails={getRecipeDetails} />;
+  return <RecipeDetailsItem getRecipeDetails={getRecipeDetails} />;
 }
