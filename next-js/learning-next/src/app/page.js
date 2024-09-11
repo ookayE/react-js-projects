@@ -19,7 +19,7 @@ export default function Home() {
       <Link href={"account"}>Navigate to Accounts page</Link>
 
       <h2 className="font-bold mt-3 text-lime-400 text-3xl">
-        Alternative way of navigating using useRouter
+        Alternative way of navigating using useRouter below
       </h2>
 
       <button onClick={handleNavigate}>Go to Products Page</button>
