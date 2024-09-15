@@ -1,4 +1,4 @@
-import connectToDB from "@/database";
+import connectToDb from "@/database";
 import blog from "@/models/blog";
 import Joi from "joi";
 import { NextResponse } from "next/server";
@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 // use Joi to validate incoming blog data
 const AddNewBlog = Joi.object({
   title: Joi.string().required(),
-  postNumber: Joi.number().required(),
   description: Joi.string().required(),
 });
 
@@ -14,16 +13,15 @@ const AddNewBlog = Joi.object({
 export async function POST(request) {
   try {
     //connect to DB
-    await connectToDB;
+    await connectToDb();
 
     //Extract data from request body
     const extractBlogData = await request.json();
-    const { title, postNumber, description } = extractBlogData;
+    const { title, description } = extractBlogData;
 
     //Validate the incoming data against defined Joi schema
     const { error } = AddNewBlog.validate({
       title,
-      postNumber,
       description,
     });
 
@@ -46,7 +44,7 @@ export async function POST(request) {
     console.log(error);
     return NextResponse.json({
       success: false,
-      message: "Nope",
+      message: { error },
     });
   }
 }
