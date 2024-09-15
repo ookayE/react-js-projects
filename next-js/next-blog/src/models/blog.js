@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 // Define schema - defining the structure of data we're storing in MongoDB
 const BlogSchema = new mongoose.Schema({
   title: String,
-  postNumber: Number,
   description: String,
 });
 
