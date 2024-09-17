@@ -11,20 +11,27 @@ const initialBlogFormData = {
 function BlogOverview() {
   //managing all our states in blogOverview
   const [openBlogDialogue, setOpenBlogDialogue] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [blogFormData, setBlogFormData] = useState(initialBlogFormData);
+  const [loading, setLoading] = useState(false);
 
   console.log(blogFormData);
 
   async function handleSaveBlogData() {
     try {
-      const response = await fetch("/api/add-blog", {
+      setLoading(true);
+      const request = await fetch("/api/add-blog", {
         method: "POST",
         body: JSON.stringify(blogFormData),
       });
 
-      const data = await response.json();
-      console.log(data);
+      const response = await request.json();
+
+      if (response?.success) {
+        setBlogFormData(initialBlogFormData);
+        setOpenBlogDialogue(false);
+        setLoading(false);
+      }
+      console.log(response);
     } catch (error) {
       console.log(error);
       setLoading(false);

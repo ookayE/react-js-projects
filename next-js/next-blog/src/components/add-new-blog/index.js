@@ -15,9 +15,8 @@ import { Label } from "@/components/ui/label";
 function AddNewBlog({
   openBlogDialogue,
   setOpenBlogDialogue,
-  loading,
-  setLoading,
   blogFormData,
+  loading,
   setBlogFormData,
   handleSaveBlogData,
 }) {
@@ -27,7 +26,16 @@ function AddNewBlog({
         <Button onClick={() => setOpenBlogDialogue(true)}>New Post</Button>
       </div>
       <div>Blog list</div>
-      <Dialog open={openBlogDialogue} onOpenChange={setOpenBlogDialogue}>
+      <Dialog
+        open={openBlogDialogue}
+        onOpenChange={() => {
+          setOpenBlogDialogue(false);
+          setBlogFormData({
+            title: "",
+            description: "",
+          });
+        }}
+      >
         <DialogTrigger asChild>
           <Button variant="outline">Edit Profile</Button>
         </DialogTrigger>
@@ -76,7 +84,7 @@ function AddNewBlog({
               onClick={handleSaveBlogData}
               type="button"
             >
-              Save changes
+              {loading ? "Saving Changes" : "Save Changes"}
             </Button>
           </DialogFooter>
         </DialogContent>
