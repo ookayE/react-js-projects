@@ -2,7 +2,10 @@ import BlogOverview from "../components/blog-overview";
 
 async function fetchListOfBlogs() {
   try {
-    const request = await fetch("http://localhost:3000/api/get-blogs");
+    const request = await fetch("http://localhost:3000/api/get-blogs", {
+      method: "GET",
+      cache: "no-store",
+    });
 
     if (!request.ok) {
       throw new Error(`${request.status}`);
@@ -18,9 +21,8 @@ async function fetchListOfBlogs() {
 
 async function Blogs() {
   const blogList = await fetchListOfBlogs();
-  console.log(blogList);
 
-  return <BlogOverview />;
+  return <BlogOverview blogList={blogList} />;
 }
 
 export default Blogs;
