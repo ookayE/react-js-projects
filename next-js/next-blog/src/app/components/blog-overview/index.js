@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation"; // Use next/navigation instead of next/router in App Router
+import { Label } from "@radix-ui/react-label";
 
 const initialBlogFormData = {
   title: "",
@@ -26,6 +27,7 @@ function BlogOverview({ blogList }) {
 
   const router = useRouter();
 
+  //
   useEffect(() => {
     // Check if window object is available to ensure it's client-side
     if (typeof window !== "undefined") {
@@ -61,7 +63,15 @@ function BlogOverview({ blogList }) {
 
   async function handleDeleteBlog(currentId) {
     try {
-      const request = await fetch("/api/delete-blog");
+      const request = await fetch(`/api/delete-blog?id=${currentId}`, {
+        method: "DELETE",
+      });
+
+      const response = await request.json();
+
+      if (response?.success) {
+        router.refresh();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +107,7 @@ function BlogOverview({ blogList }) {
             </Card>
           ))
         ) : (
-          <p>Nothing here</p>
+          <Label className="text-3xl font-extrabold">No blogs to display</Label>
         )}
       </div>
     </div>

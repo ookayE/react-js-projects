@@ -6,7 +6,7 @@ export async function DELETE(request, response) {
   try {
     await connectToDb();
 
-    const { searchParams } = newURL(request.URL);
+    const { searchParams } = new URL(request.url);
     const getCurrentBlogId = searchParams.get("id");
 
     if (!getCurrentBlogId) {
