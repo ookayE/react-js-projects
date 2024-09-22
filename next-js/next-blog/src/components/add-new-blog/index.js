@@ -19,6 +19,8 @@ function AddNewBlog({
   loading,
   setBlogFormData,
   handleSaveBlogData,
+  currentEditedBlogId,
+  setCurrentEditedBlogId,
 }) {
   return (
     <>
@@ -34,6 +36,7 @@ function AddNewBlog({
             title: "",
             description: "",
           });
+          setCurrentEditedBlogId(null);
         }}
       >
         <DialogTrigger asChild>
@@ -41,7 +44,9 @@ function AddNewBlog({
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader className="text-white">
-            <DialogTitle>Add New Post</DialogTitle>
+            <DialogTitle>
+              {currentEditedBlogId ? "Edit Post" : "Add New Post"}
+            </DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4 text-white">
             <div className="grid grid-cols-4 items-center gap-4">
