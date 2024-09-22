@@ -1,4 +1,4 @@
-import BlogOverview from "../components/blog-overview";
+import BlogOverview from "@/components/blog-overview";
 
 async function fetchListOfBlogs() {
   try {
