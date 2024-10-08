@@ -1,8 +1,38 @@
 "use server";
 
-export async function fetchListOfProducts() {
-  const response = await fetch("https://dummyjson.com/products");
-  const data = await response.json();
+import connectToDB from "@/database";
+import { User } from "lucide-react";
 
-  return data?.products;
+//add new user action
+
+export async function AddNewUserAction(formData) {
+  await connectToDB();
+
+  try {
+    const newlyCreatedUser = await User.create(formData);
+
+    if (newlyCreatedUser) {
+      return {
+        success: true,
+        message: "User added successfully",
+      };
+    } else {
+      return {
+        success: false,
+        message: "Error occurred",
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Error occurred",
+    };
+  }
 }
+
+//fetch users action
+
+//edit user action
+
+//delete user action
