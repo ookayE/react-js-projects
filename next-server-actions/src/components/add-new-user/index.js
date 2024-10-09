@@ -1,5 +1,6 @@
 "use client";
 
+import { AddNewUserAction } from "@/actions";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -30,6 +31,11 @@ function AddNewUser() {
     );
   }
 
+  async function handleAddNewUserAction() {
+    const result = await AddNewUserAction(addNewUserFormData);
+    console.log(result);
+  }
+
   return (
     <div>
       <Button onClick={() => setOpenPopup(true)}>Add New user</Button>
@@ -44,7 +50,7 @@ function AddNewUser() {
           <DialogHeader>
             <DialogTitle>Add New User</DialogTitle>
           </DialogHeader>
-          <div className="">
+          <form action={handleAddNewUserAction} className="grid gap-4 py-4">
             {addNewUserFormControls.map((controlItem) => (
               <div className="mb-5" key={controlItem.name}>
                 <Label htmlFor={controlItem.name} className="text-right">
@@ -66,12 +72,12 @@ function AddNewUser() {
                 />
               </div>
             ))}
-          </div>
-          <DialogFooter>
-            <Button disabled={!handleSaveButtonValid()} type="submit">
-              Save
-            </Button>
-          </DialogFooter>
+            <DialogFooter>
+              <Button disabled={!handleSaveButtonValid()} type="submit">
+                Save
+              </Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </div>
