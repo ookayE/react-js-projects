@@ -6,6 +6,7 @@ export default function ReactionTimeGame() {
   const [message, setMessage] = useState("Click 'Start' to begin the game!");
   const [reactionTime, setReactionTime] = useState(null);
   const [isWaiting, setIsWaiting] = useState(false);
+  const [highScores, setHighScores] = useState([]);
   const timeoutRef = useRef(null); // Holds the timeout ID
   const startTimeRef = useRef(null); // Holds the time when the signal is given
 
@@ -34,6 +35,11 @@ export default function ReactionTimeGame() {
       const reaction = endTime - startTimeRef.current;
       setReactionTime(reaction);
       setMessage("Well done! Click 'Start' to play again.");
+
+      const newScores = [...highScores, reaction]
+        .sort((a, b) => a - b)
+        .slice(0, 5);
+      setHighScores(newScores);
     }
   };
 
@@ -54,6 +60,15 @@ export default function ReactionTimeGame() {
         Click Here!
       </button>
       {reactionTime !== null && <p>Your reaction time: {reactionTime} ms</p>}
+
+      <h2>High Scores:</h2>
+      <ul>
+        {highScores && highScores.length > 0 ? (
+          highScores.map((scores) => <li>{scores}</li>)
+        ) : (
+          <p>Nothing yet</p>
+        )}
+      </ul>
     </div>
   );
 }
