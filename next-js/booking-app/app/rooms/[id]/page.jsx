@@ -1,4 +1,5 @@
 import Heading from "@/components/Heading";
+import BookingForm from "@/components/BookingForm";
 import rooms from "@/data/rooms.json";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,22 +17,44 @@ const RoomPage = ({ params }) => {
     <>
       <Heading title={room.name} />
 
-      <div className="flex flex-col">
-        <div className="flex space-x-2 items-center py-4">
-          <FaChevronLeft />
-          <Link href={"/"}>Back to Rooms</Link>
-        </div>
-        <div className="flex">
-          <Image />
-          <div className="flex flex-col">
-            <p>{room.description}</p>
-            <p>
-              <span className="font-semibold">Size: </span>
-              {room.size}
-            </p>
-          </div>
+      <div className="bg-white shadow rounded-lg p-6">
+        <Link
+          href={"/"}
+          className="flex items-center text-gray-600 hover:text-gray-800 mb-4"
+        />
+        <FaChevronLeft />
+        <span>Back to Rooms</span>
+      </div>
+
+      <div className="flex flex-col sm:flex-row sm:space-x-6 mt-2">
+        <Image
+          className="rounded-lg w-full sm:w-1/3 h-64 object-cover"
+          src={`/images/rooms/${room.image}`}
+          width={400}
+          height={100}
+        />
+        <div className="mt-4 sm:flex-1">
+          <p className="text-gray-800 mb-4">{room.description}</p>
+          <p>
+            <span className="font-semibold">Size: </span>
+            {room.sqft} sq ft
+          </p>
+          <p>
+            <span className="font-semibold">Availability: </span>
+            {room.availability}
+          </p>
+          <p>
+            <span className="font-semibold">Price: </span>
+            {`$${room.price_per_hour}`}
+          </p>
+          <p>
+            <span className="font-semibold">Address: </span>
+            {room.address}
+          </p>
         </div>
       </div>
+
+      <BookingForm room={room} />
     </>
   );
 };
