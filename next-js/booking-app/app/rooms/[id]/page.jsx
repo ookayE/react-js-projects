@@ -21,9 +21,10 @@ const RoomPage = ({ params }) => {
         <Link
           href={"/"}
           className="flex items-center text-gray-600 hover:text-gray-800 mb-4"
-        />
-        <FaChevronLeft />
-        <span>Back to Rooms</span>
+        >
+          <FaChevronLeft />
+          <span>Back to Rooms</span>
+        </Link>
       </div>
 
       <div className="flex flex-col sm:flex-row sm:space-x-6 mt-2">
