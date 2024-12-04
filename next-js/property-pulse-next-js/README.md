@@ -40,3 +40,10 @@ To be used in child component:
                 {buttonInfo.text}
             </a>
             </div>
+
+To make sure your app can read .env:
+
+On home page:
+console.log(process.env.MONGODB_URI);
+
+Escaping special characters in MONGODB_URI
