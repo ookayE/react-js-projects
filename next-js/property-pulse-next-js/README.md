@@ -47,3 +47,5 @@ On home page:
 console.log(process.env.MONGODB_URI);
 
 Escaping special characters in MONGODB_URI
+
+Consider revewing Google OAuth setup

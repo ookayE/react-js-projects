@@ -7,6 +7,7 @@ import Link from "next/link";
 import profileDefault from "@/assets/images/profile.png";
 import Image from "next/image";
 import { FaGoogle } from "react-icons/fa";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
