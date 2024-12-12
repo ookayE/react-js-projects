@@ -51,3 +51,5 @@ Escaping special characters in MONGODB_URI
 Consider revewing Google OAuth setup
 
 Make sure not to use https in nextauth urls
+
+using remote images:
