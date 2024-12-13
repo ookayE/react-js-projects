@@ -53,3 +53,25 @@ Consider revewing Google OAuth setup
 Make sure not to use https in nextauth urls
 
 using remote images:
+modifying next.config.mjs file to allow externam image patterns
+const nextConfig = {
+images: {
+remotePatterns: [
+{
+protocol: "https",
+hostname: "lh3.googleusercontent.com",
+pathname: "**",
+},
+],
+},
+};
+
+        export default nextConfig;
+
+Protecting routes in next js with middleware.
+Create middleware file in root
+
+        export { default } from "next-auth/middleware";
+        export const config = {
+          matcher: ["/properties/add", "/profile", "/properties/saved", "/messages"],
+        };
