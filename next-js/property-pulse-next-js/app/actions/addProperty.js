@@ -1,16 +1,30 @@
 "use server";
+import connectDB from "@/config/db";
+import Property from "@/models/Property";
+import { getSessionUser } from "@/utils/getSessionUser";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import cloudinary from "@/config/cloudinary";
 
 async function addProperty(formData) {
-  //access all values from amenities and images
+  await connectDB();
+
+  const sessionUser = await getSessionUser();
+
+  if (!sessionUser || !sessionUser.userID) {
+    throw new Error("User ID is required");
+  }
+
+  const { userID } = sessionUser;
+
   const amenities = formData.getAll("amenities");
-  const images = formData
-    .getAll("images")
-    .filter((images) => images.name != "");
+  const images = formData.getAll("images").filter((image) => image.name !== "");
 
   const propertyData = {
+    owner: userID,
     type: formData.get("type"),
     name: formData.get("name"),
-    description: formData.get("descripiton"),
+    description: formData.get("description"),
     location: {
       street: formData.get("location.street"),
       city: formData.get("location.city"),
@@ -31,9 +45,37 @@ async function addProperty(formData) {
       email: formData.get("seller_info.email"),
       phone: formData.get("seller_info.phone"),
     },
-    images,
   };
-  console.log(propertyData);
+
+  const imageUrls = [];
+
+  //loop over image files and convert to base64
+  for (const imageFile of images) {
+    const imageBuffer = await imageFile.arrayBuffer();
+    const imageArray = Array.from(new Uint8Array(imageBuffer));
+    const imageData = Buffer.from(imageArray);
+
+    //convert to base64
+    const imageBase64 = imageData.toString("base64");
+
+    //make request to cloudinary
+    const result = await cloudinary.uploader.upload(
+      `data:image/png;base64, ${imageBase64}`,
+      {
+        folder: "Property Pulse",
+      }
+    );
+    imageUrls.push(result.secure_url);
+  }
+
+  propertyData.images = imageUrls;
+
+  const newProperty = new Property(propertyData);
+  await newProperty.save();
+
+  revalidatePath("/", "layout");
+
+  redirect(`/properties/${newProperty._id}`);
 }
 
 export default addProperty;
