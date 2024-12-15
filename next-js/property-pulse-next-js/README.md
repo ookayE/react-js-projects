@@ -75,3 +75,5 @@ Create middleware file in root
         export const config = {
           matcher: ["/properties/add", "/profile", "/properties/saved", "/messages"],
         };
+
+Introducing server actions to handle form submissions and data mutations without the need for /api routes.

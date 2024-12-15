@@ -1,6 +1,8 @@
-const PropertyAddhtmlForm = () => {
+import addProperty from "@/app/actions/addProperty";
+
+const PropertyAddform = () => {
   return (
-    <htmlForm>
+    <form action={addProperty}>
       <h2 className="text-3xl text-center font-semibold mb-6">Add Property</h2>
 
       <div className="mb-4">
@@ -398,8 +400,8 @@ const PropertyAddhtmlForm = () => {
           Add Property
         </button>
       </div>
-    </htmlForm>
+    </form>
   );
 };
 
-export default PropertyAddhtmlForm;
+export default PropertyAddform;
