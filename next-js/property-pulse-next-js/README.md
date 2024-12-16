@@ -77,3 +77,9 @@ Create middleware file in root
         };
 
 Introducing server actions to handle form submissions and data mutations without the need for /api routes.
+
+Creating test end points that return JSON as a way to troubleshoot server-side-code
+
+Used pages/api/testCloudinary to debug environment variables by going to localhost:3000/api/testCloudiary
+-no client-side interference
+-reusable for other debugging
