@@ -25,10 +25,11 @@ const deleteProperty = async (propertyID) => {
   if (property.owner.toString() !== userID) {
     throw new Error("Unauthorized");
   }
-  //extract public ID from image URL
+
+  // extract public ID from image URL by splitting
   const publicIDs = property.images.map((imageURL) => {
-    const parts = imageURL.split("/");
-    return parts.at(-1).split(".").at(0);
+    const URLParts = imageURL.split("/");
+    return URLParts.at(-1).split(".").at(0);
   });
 
   //delete images from cloudinary
@@ -38,7 +39,7 @@ const deleteProperty = async (propertyID) => {
     }
   }
 
-  //if everything checks out:
+  // if all that works, use Mongoose method deleteOne to remove the single docuement
   await property.deleteOne();
 
   revalidatePath("/", "layout");
