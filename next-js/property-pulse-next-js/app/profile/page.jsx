@@ -8,15 +8,11 @@ import { convertToSerializableObject } from "@/utils/convertToObject";
 
 const ProfilePage = async () => {
   await connectDB();
-
   const sessionUser = await getSessionUser();
-
   const { userID } = sessionUser;
-
   if (!userID) {
     throw new Error("User ID is required");
   }
-
   const propertiesDocs = await Property.find({ owner: userID }).lean();
   const properties = propertiesDocs.map(convertToSerializableObject);
 
