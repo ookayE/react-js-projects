@@ -1,6 +1,7 @@
 import updateProperty from "@/app/actions/updateProperty";
 
 const PropertyEditForm = ({ property }) => {
+  //double check what this is doing and why we're using an action the page before updateProperty.js in our actions folder
   const updatePropertyByID = updateProperty.bind(null, property._id);
 
   return (

@@ -83,3 +83,13 @@ Creating test end points that return JSON as a way to troubleshoot server-side-c
 Used pages/api/testCloudinary to debug environment variables by going to localhost:3000/api/testCloudiary
 -no client-side interference
 -reusable for other debugging
+
+Checking bookmark status:
+
+Our bookmarkProperty action returns an isBookmarked variable
+We've created a state for isBookmarked to keep track of
+Using the isBookmarked variable from out bookmarkProperty action, we can assign our state true or false with
+
+      setIsBookmarked(response.isBookmarked);
+
+Then to keep track of the state on refresh, we run a useEffect that checksBookmarkStatus (passing in our property.\_id from our {property} object) and sets our isBookmarked state to whatever the isBookarked variable is set to.
