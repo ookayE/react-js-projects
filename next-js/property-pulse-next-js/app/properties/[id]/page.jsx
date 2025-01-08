@@ -16,6 +16,9 @@ const PropertyPage = async ({ params }) => {
   const propertyDoc = await Property.findById(params.id).lean();
   const property = convertToSerializableObject(propertyDoc);
 
+  console.log("property.images:", property.images);
+  console.log("property.images[0]:", property.images?.[0]);
+
   if (!property) {
     return (
       <h1 className="text-center text-2xl font-bold mt-10">
