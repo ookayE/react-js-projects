@@ -94,7 +94,11 @@ Using the isBookmarked variable from out bookmarkProperty action, we can assign 
 
 Then to keep track of the state on refresh, we run a useEffect that checksBookmarkStatus (passing in our property.\_id from our {property} object) and sets our isBookmarked state to whatever the isBookarked variable is set to.
 
-
 BUILDING MESSAGING SERVICES
-  -Create Messages schema. In cluding sender and recipient, the property in question, the name, email, and phone of the sender, the body of the message, and whether or not it has been seen. 
-  -Create addMessage action
+-Create Messages schema. In cluding sender and recipient, the property in question, the name, email, and phone of the sender, the body of the message, and whether or not it has been seen.
+-Create addMessage action
+-Using useActionState (allows you to update state based on the result of a form action), we
+
+-Use hidden inputs to includes the unique ID of the property being contacted. It ensures that when the form is submitted, the backend knows which property the message is related to.
+The property ID is required by your backend (addMessage.js) to associate the message with a specific property. Without it, the backend wouldn't know which property the message refers to.
+Hidden inputs are used to include important, non-visible data in the form submission. They are especially useful when you need to send contextual information (like property.\_id and property.owner) that the user doesn't need to interact with directly.

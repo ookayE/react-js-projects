@@ -17,13 +17,13 @@ const MessageSchema = new Schema(
       ref: "Property",
       required: true,
     },
-    Name: {
+    name: {
       type: String,
       required: [true, "Name is required"],
     },
     email: {
       type: String,
-      required: [true, "Emailis required"],
+      required: [true, "Email is required"],
     },
     phone: {
       type: String,
@@ -43,4 +43,4 @@ const MessageSchema = new Schema(
 
 const Message = models.Message || model("Message", MessageSchema);
 
-export default User;
+export default Message;
