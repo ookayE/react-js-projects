@@ -93,3 +93,8 @@ Using the isBookmarked variable from out bookmarkProperty action, we can assign 
       setIsBookmarked(response.isBookmarked);
 
 Then to keep track of the state on refresh, we run a useEffect that checksBookmarkStatus (passing in our property.\_id from our {property} object) and sets our isBookmarked state to whatever the isBookarked variable is set to.
+
+
+BUILDING MESSAGING SERVICES
+  -Create Messages schema. In cluding sender and recipient, the property in question, the name, email, and phone of the sender, the body of the message, and whether or not it has been seen. 
+  -Create addMessage action
