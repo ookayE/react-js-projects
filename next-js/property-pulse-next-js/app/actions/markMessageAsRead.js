@@ -9,18 +9,18 @@ async function markMessageAsRead(messageId) {
 
   const sessionUser = await getSessionUser();
 
-  if (!sessionUser || !sessionUser.user) {
+  if (!sessionUser || !sessionUser.userID) {
     throw new Error("User ID is required");
   }
 
-  const { userId } = sessionUser;
+  const { userID } = sessionUser;
 
   const message = await Message.findById(messageId);
 
   if (!message) throw new Error("Message not found");
 
   // Verify ownership
-  if (message.recipient.toString() !== userId) {
+  if (message.recipient.toString() !== userID) {
     return new Response("Unauthorized", { status: 401 });
   }
 
