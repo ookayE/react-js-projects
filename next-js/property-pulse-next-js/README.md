@@ -102,3 +102,25 @@ BUILDING MESSAGING SERVICES
 -Use hidden inputs to includes the unique ID of the property being contacted. It ensures that when the form is submitted, the backend knows which property the message is related to.
 The property ID is required by your backend (addMessage.js) to associate the message with a specific property. Without it, the backend wouldn't know which property the message refers to.
 Hidden inputs are used to include important, non-visible data in the form submission. They are especially useful when you need to send contextual information (like property.\_id and property.owner) that the user doesn't need to interact with directly.
+
+CONVERTING TO SERIALIZABLE OBJECTS:
+
+The process whereby an object or data structure is translated into a format suitable for transfer over a network, or storage (e.g. in an array buffer or file format).
+
+In JavaScript, for example, you can serialize an object to a JSON string by calling the function JSON.stringify().
+
+Next.js Server Components Require Serializable Data
+
+Server components can pass only serializable objects (plain objects, arrays, strings, etc.) to client components.
+Mongoose documents and other objects with custom methods (like toJSON) must be converted to plain objects before being passed.
+Utility Functions Should Handle All Cases
+
+Recursive processing of objects and arrays is crucial for nested data structures.
+A robust utility function like convertToSerializableObject ensures consistent handling of all fields.
+Correct Usage of .populate()
+
+.populate() should specify the correct field and subfield structure.
+Proper syntax avoids fetching unnecessary data or introducing bugs.
+Consistent Data Handling
+
+Apply the same serialization process to all data structures to avoid edge cases or partial failures.

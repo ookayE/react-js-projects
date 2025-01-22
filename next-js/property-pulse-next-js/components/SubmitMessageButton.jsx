@@ -2,7 +2,7 @@ import { FaPaperPlane } from "react-icons/fa";
 import { useFormStatus } from "react-dom";
 
 const SubmitMessageButton = () => {
-  const { pending } = useFormStatus();
+  const { pending } = useFormStatus(); //destructered pending from status
 
   return (
     <button

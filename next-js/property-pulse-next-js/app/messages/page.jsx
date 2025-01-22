@@ -1,3 +1,4 @@
+import MessageCard from "@/components/MessageCard";
 import connectDB from "@/config/db";
 import Message from "@/models/Message";
 import "@/models/Property";
@@ -17,7 +18,7 @@ const MessagesPage = async () => {
   })
     .sort({ createdAt: -1 })
     .populate("sender", "username")
-    .populate("property, name")
+    .populate("property", "name")
     .lean();
 
   const unreadMessages = await Message.find({
@@ -29,14 +30,14 @@ const MessagesPage = async () => {
     .populate("property", "name")
     .lean();
 
+  //create array of both read and unread messages
   const messages = [
-    ...unreadMessages,
-    ...readMessages.map((messageDocument) => {
-      const message = convertToSerializableObject(messageDocument);
-      message.sender = convertToSerializableObject(messageDocument.sender);
-      message.property = convertToSerializableObject(messageDocument.property);
-      return message;
-    }),
+    ...unreadMessages.map((messageDocument) =>
+      convertToSerializableObject(messageDocument)
+    ),
+    ...readMessages.map((messageDocument) =>
+      convertToSerializableObject(messageDocument)
+    ),
   ];
 
   return (
@@ -49,7 +50,8 @@ const MessagesPage = async () => {
               <p>You have no messages</p>
             ) : (
               messages.map((message) => (
-                <h3 key={message._id}>{message.name}</h3>
+                // <h3 key={message._id}>{message.name}</h3>
+                <MessageCard key={message._id} message={message} />
               ))
             )}
           </div>

@@ -1,9 +1,20 @@
 export function convertToSerializableObject(leanDocument) {
-  for (const key of Object.keys(leanDocument)) {
-    if (leanDocument[key].toJSON && leanDocument[key].toString) {
-      leanDocument[key] = leanDocument[key].toString();
+  const processValue = (value) => {
+    if (value && typeof value === "object") {
+      if (value.toJSON) {
+        return value.toJSON(); // Serialize Mongoose objects
+      } else if (Array.isArray(value)) {
+        return value.map(processValue); // Recursively process arrays
+      } else {
+        return convertToSerializableObject(value); // Recursively process objects
+      }
     }
-  }
+    return value;
+  };
 
-  return leanDocument;
+  const result = {};
+  for (const key of Object.keys(leanDocument)) {
+    result[key] = processValue(leanDocument[key]);
+  }
+  return result;
 }
