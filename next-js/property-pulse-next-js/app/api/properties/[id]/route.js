@@ -7,7 +7,7 @@ export const GET = async (request, { params }) => {
 
     const property = await Property.findById(params.id);
 
-    if (!property) return new Response("Property not found");
+    if (!property) return new Response("Property not found", { status: 404 });
 
     return new Response(property, { status: 200 });
   } catch (error) {

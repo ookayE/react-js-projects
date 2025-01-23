@@ -124,3 +124,8 @@ Proper syntax avoids fetching unnecessary data or introducing bugs.
 Consistent Data Handling
 
 Apply the same serialization process to all data structures to avoid edge cases or partial failures.
+
+Implementing pagination
+
+Using searchParms on server component to acces page(number) and pageSize values. Use countDocuments() Mongoose method to get total number of items to fetch. Adjust Property.find() to limit items on page to our chosen page size. Create a skip variable to make sure we're showing the proper items on each page. Create showPagination boolean value to determine whether or not to Pagination.jsx component.
+Pagination component handles the logic of previous and next pages.
