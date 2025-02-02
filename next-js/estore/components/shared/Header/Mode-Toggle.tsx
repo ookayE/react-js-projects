@@ -49,7 +49,6 @@ const ModeToggle = () => {
         <DropdownMenuCheckboxItem
           checked={theme === "system"}
           onClick={() => {
-            console.log("Setting theme to system");
             setTheme("system");
           }}
         >
@@ -58,7 +57,6 @@ const ModeToggle = () => {
         <DropdownMenuCheckboxItem
           checked={theme === "dark"}
           onClick={() => {
-            console.log("Setting theme to dark");
             setTheme("dark");
           }}
         >
@@ -67,7 +65,6 @@ const ModeToggle = () => {
         <DropdownMenuCheckboxItem
           checked={theme === "light"}
           onClick={() => {
-            console.log("Setting theme to light");
             setTheme("light");
           }}
         >
